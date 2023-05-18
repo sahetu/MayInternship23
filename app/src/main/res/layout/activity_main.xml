@@ -10,74 +10,69 @@
     <ImageView
         android:id="@+id/main_image"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/_170sdp"
         android:src="@drawable/login_venctor" />
 
     <TextView
         android:id="@+id/main_welcome"
+        style="@style/text_white_bold_18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_image"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/artifika"
-        android:text="Welcome Back!"
-        android:textColor="@color/white"
-        android:textSize="18dp"
-        android:textStyle="bold" />
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/welcome" />
 
     <TextView
         android:id="@+id/main_please_login"
+        style="@style/text_white_trans_16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_welcome"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/artifika"
-        android:text="Please Log into your existing account"
-        android:textColor="@color/white_transparent_70"
-        android:textSize="16dp" />
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="@string/welcome_message" />
 
     <EditText
-        android:padding="15dp"
-        android:background="@drawable/custom_border"
         android:id="@+id/main_email"
+        style="@style/edit_white_trans_14"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_please_login"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/artifika"
-        android:hint="Your Email"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/white_transparent_80"
-        android:textColorHint="@color/white_transparent_70" />
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:hint="@string/your_email"
+        android:inputType="textEmailAddress" />
 
     <EditText
-        android:padding="15dp"
-        android:background="@drawable/custom_border"
         android:id="@+id/main_password"
+        style="@style/edit_white_trans_14"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_email"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/artifika"
-        android:hint="Your Password"
-        android:inputType="textPassword"
-        android:textColor="@color/white_transparent_80"
-        android:textColorHint="@color/white_transparent_70" />
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:hint="@string/your_password"
+        android:inputType="textPassword" />
 
     <Button
+        android:id="@+id/main_login"
+        style="@style/button_green_bold_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_password"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/green"
-        android:fontFamily="@font/artifika"
-        android:text="Log in"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="@string/login" />
+
+    <TextView
+        android:id="@+id/main_create_account"
+        style="@style/text_white_bold_18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:text="@string/create_account" />
 
 </RelativeLayout>
