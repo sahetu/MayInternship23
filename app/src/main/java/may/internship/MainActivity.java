@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Use Explicite Intent
                 Intent intent = new Intent(MainActivity.this,SignupActivity.class);
                 startActivity(intent);
             }
