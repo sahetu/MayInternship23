@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
@@ -53,7 +54,8 @@
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:hint="@string/your_password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:maxLength="12" />
 
     <Button
         android:id="@+id/main_login"
