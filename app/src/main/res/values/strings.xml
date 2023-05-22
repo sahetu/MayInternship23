@@ -6,4 +6,16 @@
     <string name="your_password">Your Password</string>
     <string name="login">Log in</string>
     <string name="create_account">Create An Account</string>
+
+    <string name="name">Name</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="date_of_birth">Date Of Birth</string>
+
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+
+    <string name="signup">Signup</string>
+
 </resources>
