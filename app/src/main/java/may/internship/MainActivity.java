@@ -56,20 +56,25 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("LOGIN", "Login Successfully");
                         Log.e("LOGIN", "Login Successfully");
 
-                        Toast.makeText(MainActivity.this, "Login Successfuly", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, "Login Successfuly", Toast.LENGTH_LONG).show();
+                        new CommonMethod(MainActivity.this, "Login Successfully");
                         /*Snackbar snackbar = Snackbar.make(relativeLayout,"Login Successfully",Snackbar.LENGTH_LONG);
                         snackbar.show();*/
-                        Snackbar.make(view, "Login Successfully", Snackbar.LENGTH_LONG).show();
+                        //Snackbar.make(view, "Login Successfully", Snackbar.LENGTH_LONG).show();
+                        new CommonMethod(view,"Login Successfully");
 
-                        Intent intent = new Intent(MainActivity.this,HomeActivity.class);
-                        startActivity(intent);
+                        /*Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                        startActivity(intent);*/
+                        new CommonMethod(MainActivity.this,HomeActivity.class);
 
                         //startActivity(new Intent(MainActivity.this,HomeActivity.class));
 
                     }
                     else{
-                        Toast.makeText(MainActivity.this, "Login Unsuccessfuly", Toast.LENGTH_LONG).show();
-                        Snackbar.make(view, "Login Unsuccessfully", Snackbar.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, "Login Unsuccessfuly", Toast.LENGTH_LONG).show();
+                        new CommonMethod(MainActivity.this, "Login Unsuccessfully");
+                        //Snackbar.make(view, "Login Unsuccessfully", Snackbar.LENGTH_LONG).show();
+                        new CommonMethod(view,"Login Unsuccessfully");
                     }
                 }
             }
@@ -80,8 +85,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Use Explicite Intent
-                Intent intent = new Intent(MainActivity.this,SignupActivity.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(MainActivity.this,SignupActivity.class);
+                startActivity(intent);*/
+                new CommonMethod(MainActivity.this,SignupActivity.class);
             }
         });
 

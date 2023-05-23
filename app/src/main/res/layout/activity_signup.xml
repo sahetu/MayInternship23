@@ -79,6 +79,7 @@
             android:maxLength="15" />
 
         <EditText
+            android:editable="false"
             android:id="@+id/signup_date_of_birth"
             style="@style/edit_white_trans_14"
             android:layout_width="match_parent"
@@ -125,6 +126,7 @@
             android:layout_height="wrap_content"/>
 
         <Button
+            android:id="@+id/signup_button"
             android:text="@string/signup"
             style="@style/button_green_bold_16"
             android:layout_marginVertical="@dimen/_20sdp"
