@@ -119,6 +119,7 @@
         </RadioGroup>
 
         <Spinner
+            android:id="@+id/signup_spinner"
             android:background="@color/white_transparent_70"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginHorizontal="@dimen/_20sdp"

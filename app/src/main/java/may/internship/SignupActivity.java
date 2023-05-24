@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -27,6 +31,10 @@ public class SignupActivity extends AppCompatActivity {
     //RadioButton male,female;
     RadioGroup gender;
 
+    Spinner spinner;
+    //String[] cityArray = {"Ahmedabad","Vadodara","Surat","Rajkot"};
+    ArrayList<String> arrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +46,39 @@ public class SignupActivity extends AppCompatActivity {
         password = findViewById(R.id.signup_password);
         confirmPassword = findViewById(R.id.signup_confirm_password);
         dateOfBirth = findViewById(R.id.signup_date_of_birth);
+
+        spinner = findViewById(R.id.signup_spinner);
+
+        arrayList = new ArrayList<>();
+        arrayList.add("Ahmedabad");
+        arrayList.add("Anand");
+        arrayList.add("Vadodara");
+        arrayList.add("Test");
+        arrayList.add("Surt");
+        arrayList.add("Rajkot");
+
+        arrayList.remove(3);
+        arrayList.set(3,"Surat");
+
+        arrayList.add(0,"Gandhinagar");
+
+        ArrayAdapter adapter = new ArrayAdapter(SignupActivity.this, android.R.layout.simple_list_item_1,arrayList);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                //String selectedCity = cityArray[i];
+                String selectedCity = arrayList.get(i);
+                new CommonMethod(SignupActivity.this,selectedCity);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         /*male = findViewById(R.id.signup_male);
         female = findViewById(R.id.signup_female);*/
