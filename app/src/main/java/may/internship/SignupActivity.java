@@ -3,6 +3,8 @@ package may.internship;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,10 +37,18 @@ public class SignupActivity extends AppCompatActivity {
     //String[] cityArray = {"Ahmedabad","Vadodara","Surat","Rajkot"};
     ArrayList<String> arrayList;
 
+    SQLiteDatabase db;
+
+    String sGender,sCity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        db = openOrCreateDatabase("MayInternship",MODE_PRIVATE,null);
+        String tableQuery = "CREATE TABLE IF NOT EXISTS RECORD(NAME VARCHAR(100),EMAIL VARCHAR(100),CONTACT BIGINT(10),PASSWORD VARCHAR(15),DOB VARCHAR(10),GENDER VARCHAR(6),CITY VARCHAR(50))";
+        db.execSQL(tableQuery);
 
         name = findViewById(R.id.signup_name);
         email = findViewById(R.id.signup_email);
@@ -70,8 +80,8 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //String selectedCity = cityArray[i];
-                String selectedCity = arrayList.get(i);
-                new CommonMethod(SignupActivity.this,selectedCity);
+                sCity = arrayList.get(i);
+                new CommonMethod(SignupActivity.this,sCity);
             }
 
             @Override
@@ -89,6 +99,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 RadioButton radioButton = findViewById(i);
                 new CommonMethod(SignupActivity.this,radioButton.getText().toString());
+                sGender = radioButton.getText().toString();
             }
         });
         /*male.setOnClickListener(new View.OnClickListener() {
@@ -132,12 +143,12 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        name.setText("Test");
+        /*name.setText("Test");
         email.setText("test@gmail.com");
         contact.setText("9090901234");
         password.setText("123123");
         confirmPassword.setText("123123");
-        dateOfBirth.setText("23-05-2023");
+        dateOfBirth.setText("23-05-2023");*/
 
         signup = findViewById(R.id.signup_button);
 
@@ -175,7 +186,16 @@ public class SignupActivity extends AppCompatActivity {
                     new CommonMethod(SignupActivity.this,"Please Select Gender");
                 }
                 else {
-                    new CommonMethod(SignupActivity.this, "Signup Successfully");
+                    String selectQuery = "SELECT * FROM RECORD WHERE EMAIL='" + email.getText().toString() + "' OR CONTACT='" + contact.getText().toString() + "'";
+                    Cursor cursor = db.rawQuery(selectQuery, null);
+                    if (cursor.getCount() > 0) {
+                        new CommonMethod(SignupActivity.this,"Email Id/Contact No. Already Regsitered");
+                    } else {
+                        String insertQuery = "INSERT INTO RECORD VALUES ('" + name.getText().toString() + "','" + email.getText().toString() + "','" + contact.getText().toString() + "','" + password.getText().toString() + "','" + dateOfBirth.getText().toString() + "','" + sGender + "','" + sCity + "')";
+                        db.execSQL(insertQuery);
+                        new CommonMethod(SignupActivity.this, "Signup Successfully");
+                        onBackPressed();
+                    }
                 }
             }
         });
