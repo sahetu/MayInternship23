@@ -17,5 +17,6 @@
     <string name="female">Female</string>
 
     <string name="signup">Signup</string>
+    <string name="logout">Logout</string>
 
 </resources>

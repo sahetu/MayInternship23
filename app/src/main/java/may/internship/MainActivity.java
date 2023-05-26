@@ -1,6 +1,7 @@
 package may.internship;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -28,10 +29,14 @@ public class MainActivity extends AppCompatActivity {
     TextView createAccount;
     SQLiteDatabase db;
 
+    SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sp = getSharedPreferences(ConstantData.PREF,MODE_PRIVATE);
 
         db = openOrCreateDatabase("MayInternship",MODE_PRIVATE,null);
         String tableQuery = "CREATE TABLE IF NOT EXISTS RECORD(NAME VARCHAR(100),EMAIL VARCHAR(100),CONTACT BIGINT(10),PASSWORD VARCHAR(15),DOB VARCHAR(10),GENDER VARCHAR(6),CITY VARCHAR(50))";
@@ -78,12 +83,22 @@ public class MainActivity extends AppCompatActivity {
                                 Log.e("LOGIN", "Login Successfully");
                                 new CommonMethod(MainActivity.this, "Login Successfully");
                                 new CommonMethod(view,"Login Successfully");
-                                //new CommonMethod(MainActivity.this,HomeActivity.class);
-                                Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+
+                                sp.edit().putString(ConstantData.NAME,sName).commit();
+                                sp.edit().putString(ConstantData.EMAIL,sEmail).commit();
+                                sp.edit().putString(ConstantData.CONTACT,sContact).commit();
+                                sp.edit().putString(ConstantData.PASSWORD,sPassword).commit();
+                                sp.edit().putString(ConstantData.DOB,sDob).commit();
+                                sp.edit().putString(ConstantData.GENDER,sGender).commit();
+                                sp.edit().putString(ConstantData.CITY,sCity).commit();
+
+                                new CommonMethod(MainActivity.this,HomeActivity.class);
+
+                                /*Intent intent = new Intent(MainActivity.this,HomeActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("NAME",sName);
                                 intent.putExtras(bundle);
-                                startActivity(intent);
+                                startActivity(intent);*/
                             }
                         }
                     }
@@ -119,4 +134,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        finishAffinity();
+    }
+
 }
