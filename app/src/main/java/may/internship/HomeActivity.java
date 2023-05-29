@@ -1,6 +1,9 @@
 package may.internship;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +17,12 @@ public class HomeActivity extends AppCompatActivity {
     SharedPreferences sp;
 
     Button logout;
+
+    RecyclerView categoryRecyclerview;
+
+    String[] categoryNameArray = {"Food & Drink","Fashion","Beauty","Travel","Health","Bakery"};
+    int[] categoryImageArray = {R.drawable.food_drink,R.drawable.fashion,R.drawable.beauty,R.drawable.travel,R.drawable.health,R.drawable.bakery};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,12 @@ public class HomeActivity extends AppCompatActivity {
 
         name.setText("Welcome "+sp.getString(ConstantData.NAME,""));
 
+        categoryRecyclerview = findViewById(R.id.home_category);
+        categoryRecyclerview.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
+        categoryRecyclerview.setItemAnimator(new DefaultItemAnimator());
+
+        CategoryAdapter catAdapter = new CategoryAdapter(HomeActivity.this,categoryNameArray,categoryImageArray);
+        categoryRecyclerview.setAdapter(catAdapter);
     }
 
     @Override

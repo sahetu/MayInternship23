@@ -9,12 +9,17 @@
     tools:context=".HomeActivity">
 
     <TextView
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_gravity="center"
         android:id="@+id/home_name"
         style="@style/text_white_bold_18"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_20sdp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/home_logout"
