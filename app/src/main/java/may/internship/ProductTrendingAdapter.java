@@ -13,12 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyHolder> {
+public class ProductTrendingAdapter extends RecyclerView.Adapter<ProductTrendingAdapter.MyHolder> {
 
     Context context;
     ArrayList<ProductList> productArrayList;
     SharedPreferences sp;
-    public ProductAdapter(Context context, ArrayList<ProductList> productArrayList) {
+
+    public ProductTrendingAdapter(Context context, ArrayList<ProductList> productArrayList) {
         this.context = context;
         this.productArrayList = productArrayList;
         sp = context.getSharedPreferences(ConstantData.PREF,Context.MODE_PRIVATE);
@@ -26,28 +27,28 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyHolder
 
     @NonNull
     @Override
-    public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_product,parent,false);
-        return new MyHolder(view);
+    public ProductTrendingAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_product_trending, parent, false);
+        return new ProductTrendingAdapter.MyHolder(view);
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView name,price;
+        TextView name, price;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.custom_product_image);
-            name = itemView.findViewById(R.id.custom_product_name);
-            price = itemView.findViewById(R.id.custom_product_price);
+            imageView = itemView.findViewById(R.id.custom_product_trending_image);
+            name = itemView.findViewById(R.id.custom_product_trending_name);
+            price = itemView.findViewById(R.id.custom_product_trending_price);
         }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ProductTrendingAdapter.MyHolder holder, int position) {
         holder.name.setText(productArrayList.get(position).getName());
-        holder.price.setText(ConstantData.PRICE_SYMBOL+productArrayList.get(position).getPrice()+"/"+productArrayList.get(position).getUnit());
+        holder.price.setText(ConstantData.PRICE_SYMBOL + productArrayList.get(position).getPrice() + "/" + productArrayList.get(position).getUnit());
         holder.imageView.setImageResource(productArrayList.get(position).getImage());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
