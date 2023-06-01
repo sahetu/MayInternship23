@@ -66,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     String loginQuery = "SELECT * FROM RECORD WHERE (EMAIL='"+email.getText().toString()+"' OR CONTACT='"+email.getText().toString()+"') AND PASSWORD='"+password.getText().toString()+"'";
                     Cursor cursor = db.rawQuery(loginQuery,null);
                     if(cursor.getCount()>0){
-
-                        if(cursor.moveToFirst()){
+                        /*if(cursor.moveToFirst()){*/
                             while (cursor.moveToNext()){
                                 String sName = cursor.getString(0);
                                 String sEmail = cursor.getString(1);
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                                 intent.putExtras(bundle);
                                 startActivity(intent);*/
                             }
-                        }
+                        /*}*/
                     }
                     else{
                         new CommonMethod(MainActivity.this, "Login Unsuccessfully");

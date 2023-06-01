@@ -18,6 +18,9 @@
 
     <string name="signup">Signup</string>
     <string name="logout">Logout</string>
+    <string name="profile">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="submit">Submit</string>
 
     <string name="product_name">Product Name :</string>
     <string name="product_price">Price :</string>
