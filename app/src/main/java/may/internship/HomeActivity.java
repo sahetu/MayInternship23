@@ -19,7 +19,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView name;
     SharedPreferences sp;
 
-    Button logout,profile;
+    Button logout,profile,changePassword;
 
     RecyclerView categoryRecyclerview;
 
@@ -64,6 +64,14 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         sp = getSharedPreferences(ConstantData.PREF,MODE_PRIVATE);
+
+        changePassword = findViewById(R.id.home_change_password);
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CommonMethod(HomeActivity.this, ChangePasswordActivity.class);
+            }
+        });
 
         profile = findViewById(R.id.home_profile);
         profile.setOnClickListener(new View.OnClickListener() {
