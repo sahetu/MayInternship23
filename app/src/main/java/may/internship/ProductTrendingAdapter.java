@@ -34,7 +34,7 @@ public class ProductTrendingAdapter extends RecyclerView.Adapter<ProductTrending
 
     public class MyHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView;
+        ImageView imageView,addCart,wishlistBlank,wishlistFill;
         TextView name, price;
 
         public MyHolder(@NonNull View itemView) {
@@ -42,6 +42,9 @@ public class ProductTrendingAdapter extends RecyclerView.Adapter<ProductTrending
             imageView = itemView.findViewById(R.id.custom_product_trending_image);
             name = itemView.findViewById(R.id.custom_product_trending_name);
             price = itemView.findViewById(R.id.custom_product_trending_price);
+            addCart = itemView.findViewById(R.id.custom_product_trending_cart);
+            wishlistBlank = itemView.findViewById(R.id.custom_product_trending_wishlist);
+            wishlistFill = itemView.findViewById(R.id.custom_product_trending_wishlist_fill);
         }
     }
 
@@ -60,6 +63,29 @@ public class ProductTrendingAdapter extends RecyclerView.Adapter<ProductTrending
                 sp.edit().putString(ConstantData.PRODUCT_IMAGE, String.valueOf(productArrayList.get(position).getImage())).commit();
                 sp.edit().putString(ConstantData.PRODUCT_DESCRIPTION,productArrayList.get(position).getDescription()).commit();
                 new CommonMethod(context,ProductDetailActivity.class);
+            }
+        });
+
+        holder.addCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CommonMethod(context,"Add To Cart");
+            }
+        });
+
+        holder.wishlistBlank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.wishlistBlank.setVisibility(View.GONE);
+                holder.wishlistFill.setVisibility(View.VISIBLE);
+            }
+        });
+
+        holder.wishlistFill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.wishlistBlank.setVisibility(View.VISIBLE);
+                holder.wishlistFill.setVisibility(View.GONE);
             }
         });
 

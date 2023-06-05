@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-    TextView createAccount;
+    TextView createAccount,forgotPassword;
     SQLiteDatabase db;
 
     SharedPreferences sp;
@@ -46,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
         login = findViewById(R.id.main_login);
         email = findViewById(R.id.main_email);
         password = findViewById(R.id.main_password);
+
+        forgotPassword = findViewById(R.id.main_forgot_password);
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CommonMethod(MainActivity.this, ForgotPasswordActivity.class);
+            }
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

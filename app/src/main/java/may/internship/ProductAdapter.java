@@ -33,7 +33,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyHolder
 
     public class MyHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView;
+        ImageView imageView,addCart,wishlist,wishlistFill;
         TextView name,price;
 
         public MyHolder(@NonNull View itemView) {
@@ -41,6 +41,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyHolder
             imageView = itemView.findViewById(R.id.custom_product_image);
             name = itemView.findViewById(R.id.custom_product_name);
             price = itemView.findViewById(R.id.custom_product_price);
+            addCart = itemView.findViewById(R.id.custom_product_cart);
+            wishlist = itemView.findViewById(R.id.custom_product_wishlist);
+            wishlistFill = itemView.findViewById(R.id.custom_product_wishlist_fill);
         }
     }
 
@@ -59,6 +62,29 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyHolder
                 sp.edit().putString(ConstantData.PRODUCT_IMAGE, String.valueOf(productArrayList.get(position).getImage())).commit();
                 sp.edit().putString(ConstantData.PRODUCT_DESCRIPTION,productArrayList.get(position).getDescription()).commit();
                 new CommonMethod(context,ProductDetailActivity.class);
+            }
+        });
+
+        holder.addCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CommonMethod(context,"Add To Cart");
+            }
+        });
+
+        holder.wishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.wishlist.setVisibility(View.GONE);
+                holder.wishlistFill.setVisibility(View.VISIBLE);
+            }
+        });
+
+        holder.wishlistFill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.wishlist.setVisibility(View.VISIBLE);
+                holder.wishlistFill.setVisibility(View.GONE);
             }
         });
 

@@ -21,11 +21,14 @@
     <string name="profile">Profile</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="submit">Submit</string>
+    <string name="continue_text">Continue</string>
 
     <string name="change_password">Change Password</string>
-    
+
     <string name="product_name">Product Name :</string>
     <string name="product_price">Price :</string>
     <string name="product_description">Description :</string>
+
+    <string name="forgot_password">Forgot Password</string>
 
 </resources>
