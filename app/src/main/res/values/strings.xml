@@ -30,5 +30,9 @@
     <string name="product_description">Description :</string>
 
     <string name="forgot_password">Forgot Password</string>
+    <string name="title_activity_bottom_nav_demo">BottomNavDemoActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>

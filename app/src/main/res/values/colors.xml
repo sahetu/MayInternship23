@@ -6,4 +6,8 @@
     <color name="white_transparent_70">#B3FFFFFF</color>
     <color name="white_transparent_80">#CCFFFFFF</color>
     <color name="green">#2CC990</color>
+
+    <color name="blue_active">#03a9f4</color>
+    <color name="blue_inactive">#64b5f6</color>
+
 </resources>

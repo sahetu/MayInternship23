@@ -26,6 +26,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -39,6 +42,12 @@ dependencies {
 
     //Circle Imageview
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //bubble-navigation
+    //implementation 'com.gauravk.bubblenavigation:bubblenavigation:1.0.7'
+
+    //Meow Bottom Navigation
+    implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
