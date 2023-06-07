@@ -24,7 +24,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         bottomNavigation = findViewById(R.id.home_bottom);
 
-        bottomNavigation.add(new MeowBottomNavigation.Model(HOME_BOTTOM, R.drawable.calander));
+        bottomNavigation.add(new MeowBottomNavigation.Model(HOME_BOTTOM, R.drawable.ic_home));
         bottomNavigation.add(new MeowBottomNavigation.Model(CART_BOTTOM, R.drawable.add_cart));
         bottomNavigation.add(new MeowBottomNavigation.Model(WISHLIST_BOTTOM, R.drawable.wishlist_fill));
         bottomNavigation.add(new MeowBottomNavigation.Model(PROFILE_BOTTOM, R.drawable.user));
@@ -32,23 +32,23 @@ public class DashboardActivity extends AppCompatActivity {
         bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
             public void onClickItem(MeowBottomNavigation.Model item) {
-                /*if (item.getId() == HOME_BOTTOM) {
+                if (item.getId() == HOME_BOTTOM) {
                     FragmentManager manager = getSupportFragmentManager();
-                    //manager.beginTransaction().replace(R.id.home_main, new HomeFragment()).commit();
+                    manager.beginTransaction().replace(R.id.home_main, new HomeFragment()).commit();
                 }
                 if (item.getId() == CART_BOTTOM) {
                     FragmentManager manager = getSupportFragmentManager();
-                    //manager.beginTransaction().replace(R.id.home_main, new CategoryFragment()).commit();
+                    manager.beginTransaction().replace(R.id.home_main, new CartFragment()).commit();
                 }
                 if (item.getId() == WISHLIST_BOTTOM) {
                     FragmentManager manager = getSupportFragmentManager();
-                    //manager.beginTransaction().replace(R.id.home_main, new CategoryFragment()).commit();
+                    manager.beginTransaction().replace(R.id.home_main, new WishlistFragment()).commit();
                 }
                 if (item.getId() == PROFILE_BOTTOM) {
                     FragmentManager manager = getSupportFragmentManager();
-                    //manager.beginTransaction().replace(R.id.home_main, new ProfileFragment()).commit();
-                }*/
-                Toast.makeText(DashboardActivity.this, "clicked item : " + item.getId(), Toast.LENGTH_SHORT).show();
+                    manager.beginTransaction().replace(R.id.home_main, new ProfileFragment()).commit();
+                }
+                //Toast.makeText(DashboardActivity.this, "clicked item : " + item.getId(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -68,7 +68,14 @@ public class DashboardActivity extends AppCompatActivity {
 
         bottomNavigation.show(HOME_BOTTOM, true);
         FragmentManager manager = getSupportFragmentManager();
-        //manager.beginTransaction().replace(R.id.home_main, new CategoryFragment()).commit();
+        manager.beginTransaction().replace(R.id.home_main, new HomeFragment()).commit();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        finishAffinity();
+    }
+
 }

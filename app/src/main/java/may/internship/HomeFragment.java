@@ -1,6 +1,9 @@
 package may.internship;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,18 +11,17 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeFragment extends Fragment {
 
     TextView name;
     SharedPreferences sp;
-
-    Button logout,profile,changePassword;
 
     RecyclerView categoryRecyclerview;
 
@@ -59,71 +61,51 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<ProductList> productTrendingArrayList;
     TextView trendingProductViewAll;
 
+    public HomeFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        sp = getSharedPreferences(ConstantData.PREF,MODE_PRIVATE);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        sp = getActivity().getSharedPreferences(ConstantData.PREF,MODE_PRIVATE);
 
-        changePassword = findViewById(R.id.home_change_password);
-        changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new CommonMethod(HomeActivity.this, ChangePasswordActivity.class);
-            }
-        });
-
-        profile = findViewById(R.id.home_profile);
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new CommonMethod(HomeActivity.this, ProfileActivity.class);
-            }
-        });
-
-        logout = findViewById(R.id.home_logout);
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //sp.edit().remove(ConstantData.CONTACT).commit();
-                sp.edit().clear().commit();
-                new CommonMethod(HomeActivity.this,MainActivity.class);
-            }
-        });
-
-        name = findViewById(R.id.home_name);
+        name = view.findViewById(R.id.home_name);
 
         /*Bundle bundle = getIntent().getExtras();
         name.setText("Welcome "+bundle.getString("NAME"));*/
 
         name.setText("Welcome "+sp.getString(ConstantData.NAME,""));
 
-        setCategoryData();
-        setProductData();
-        setProductTrendingData();
+        setCategoryData(view);
+        setProductData(view);
+        setProductTrendingData(view);
+
+        return view;
     }
 
-    private void setCategoryData() {
-        categoryRecyclerview = findViewById(R.id.home_category);
+    private void setCategoryData(View view) {
+        categoryRecyclerview = view.findViewById(R.id.home_category);
         categoryRecyclerview.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
         categoryRecyclerview.setItemAnimator(new DefaultItemAnimator());
 
-        CategoryAdapter catAdapter = new CategoryAdapter(HomeActivity.this,categoryNameArray,categoryImageArray);
+        CategoryAdapter catAdapter = new CategoryAdapter(getActivity(),categoryNameArray,categoryImageArray);
         categoryRecyclerview.setAdapter(catAdapter);
     }
 
-    private void setProductData() {
+    private void setProductData(View view) {
 
-        productViewAll = findViewById(R.id.home_product_view_all);
+        productViewAll = view.findViewById(R.id.home_product_view_all);
         productViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new CommonMethod(HomeActivity.this,ProductActivity.class);
+                new CommonMethod(getActivity(),ProductActivity.class);
             }
         });
 
-        productRecyclerview = findViewById(R.id.home_product_recyclerview);
+        productRecyclerview = view.findViewById(R.id.home_product_recyclerview);
         productRecyclerview.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         productRecyclerview.setItemAnimator(new DefaultItemAnimator());
         productRecyclerview.setNestedScrollingEnabled(false);
@@ -138,22 +120,22 @@ public class HomeActivity extends AppCompatActivity {
             list.setDescription(productDescriptionArray[i]);
             productArrayList.add(list);
         }
-        ProductAdapter prodAdapter = new ProductAdapter(HomeActivity.this,productArrayList);
+        ProductAdapter prodAdapter = new ProductAdapter(getActivity(),productArrayList);
         productRecyclerview.setAdapter(prodAdapter);
     }
 
-    private void setProductTrendingData() {
+    private void setProductTrendingData(View view) {
 
-        trendingProductViewAll = findViewById(R.id.home_product_trending_view_all);
+        trendingProductViewAll = view.findViewById(R.id.home_product_trending_view_all);
         trendingProductViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new CommonMethod(HomeActivity.this,TrendingProductActivity.class);
+                new CommonMethod(getActivity(),TrendingProductActivity.class);
             }
         });
 
-        productTrendingRecyclerview = findViewById(R.id.home_product_trending_recyclerview);
-        productTrendingRecyclerview.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
+        productTrendingRecyclerview = view.findViewById(R.id.home_product_trending_recyclerview);
+        productTrendingRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         productTrendingRecyclerview.setItemAnimator(new DefaultItemAnimator());
         productTrendingRecyclerview.setNestedScrollingEnabled(false);
 
@@ -167,13 +149,8 @@ public class HomeActivity extends AppCompatActivity {
             list.setDescription(productTrendingDescriptionArray[i]);
             productTrendingArrayList.add(list);
         }
-        ProductTrendingAdapter prodAdapter = new ProductTrendingAdapter(HomeActivity.this,productTrendingArrayList);
+        ProductTrendingAdapter prodAdapter = new ProductTrendingAdapter(getActivity(),productTrendingArrayList);
         productTrendingRecyclerview.setAdapter(prodAdapter);
     }
 
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-        finishAffinity();
-    }
 }

@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                                 sp.edit().putString(ConstantData.GENDER,sGender).commit();
                                 sp.edit().putString(ConstantData.CITY,sCity).commit();
 
-                                new CommonMethod(MainActivity.this,HomeActivity.class);
+                                new CommonMethod(MainActivity.this,DashboardActivity.class);
 
                                 /*Intent intent = new Intent(MainActivity.this,HomeActivity.class);
                                 Bundle bundle = new Bundle();
