@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +63,8 @@ public class HomeFragment extends Fragment {
     ArrayList<ProductList> productTrendingArrayList;
     TextView trendingProductViewAll;
 
+    SQLiteDatabase db;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -71,6 +75,16 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         sp = getActivity().getSharedPreferences(ConstantData.PREF,MODE_PRIVATE);
+
+        db = getActivity().openOrCreateDatabase("MayInternship",MODE_PRIVATE,null);
+        String tableQuery = "CREATE TABLE IF NOT EXISTS RECORD(NAME VARCHAR(100),EMAIL VARCHAR(100),CONTACT BIGINT(10),PASSWORD VARCHAR(15),DOB VARCHAR(10),GENDER VARCHAR(6),CITY VARCHAR(50))";
+        db.execSQL(tableQuery);
+
+        String wishlistTableQuery = "CREATE TABLE IF NOT EXISTS WISHLIST(CONTACT INT(10),PRODUCTNAME VARCHAR(100))";
+        db.execSQL(wishlistTableQuery);
+
+        String cartTableQuery = "CREATE TABLE IF NOT EXISTS CART(CONTACT INT(10),ORDERID INT(10),PRODUCTNAME VARCHAR(100),QTY INT(10),PRODUCTPRICE INT(100),PRODUCTUNIT VARCHAR(100),PRODUCTIMAGE INT(100))";
+        db.execSQL(cartTableQuery);
 
         name = view.findViewById(R.id.home_name);
 
@@ -118,6 +132,25 @@ public class HomeFragment extends Fragment {
             list.setPrice(productPriceArray[i]);
             list.setUnit(productUnitArray[i]);
             list.setDescription(productDescriptionArray[i]);
+
+            String wishlishCheckQuery = "SELECT * FROM WISHLIST WHERE CONTACT='"+sp.getString(ConstantData.CONTACT,"")+"' AND PRODUCTNAME='"+productNameArray[i]+"'";
+            Cursor cursor = db.rawQuery(wishlishCheckQuery,null);
+            if(cursor.getCount()>0){
+                list.setWishlist(true);
+            }
+            else{
+                list.setWishlist(false);
+            }
+
+            String cartCheckQuery = "SELECT * FROM CART WHERE CONTACT='"+sp.getString(ConstantData.CONTACT,"")+"' AND PRODUCTNAME='"+productNameArray[i]+"' AND ORDERID='0'";
+            Cursor cursorCart = db.rawQuery(cartCheckQuery,null);
+            if(cursorCart.getCount()>0){
+                list.setCart(true);
+            }
+            else{
+                list.setCart(false);
+            }
+
             productArrayList.add(list);
         }
         ProductAdapter prodAdapter = new ProductAdapter(getActivity(),productArrayList);
@@ -147,6 +180,25 @@ public class HomeFragment extends Fragment {
             list.setPrice(productTrendingPriceArray[i]);
             list.setUnit(productTrendingUnitArray[i]);
             list.setDescription(productTrendingDescriptionArray[i]);
+
+            String wishlishCheckQuery = "SELECT * FROM WISHLIST WHERE CONTACT='"+sp.getString(ConstantData.CONTACT,"")+"' AND PRODUCTNAME='"+productTrendingNameArray[i]+"'";
+            Cursor cursor = db.rawQuery(wishlishCheckQuery,null);
+            if(cursor.getCount()>0){
+                list.setWishlist(true);
+            }
+            else{
+                list.setWishlist(false);
+            }
+
+            String cartCheckQuery = "SELECT * FROM CART WHERE CONTACT='"+sp.getString(ConstantData.CONTACT,"")+"' AND PRODUCTNAME='"+productTrendingNameArray[i]+"' AND ORDERID='0'";
+            Cursor cursorCart = db.rawQuery(cartCheckQuery,null);
+            if(cursorCart.getCount()>0){
+                list.setCart(true);
+            }
+            else{
+                list.setCart(false);
+            }
+
             productTrendingArrayList.add(list);
         }
         ProductTrendingAdapter prodAdapter = new ProductTrendingAdapter(getActivity(),productTrendingArrayList);

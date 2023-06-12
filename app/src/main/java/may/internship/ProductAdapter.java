@@ -1,7 +1,10 @@
 package may.internship;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +21,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyHolder
     Context context;
     ArrayList<ProductList> productArrayList;
     SharedPreferences sp;
+
+    SQLiteDatabase db;
+
     public ProductAdapter(Context context, ArrayList<ProductList> productArrayList) {
         this.context = context;
         this.productArrayList = productArrayList;
-        sp = context.getSharedPreferences(ConstantData.PREF,Context.MODE_PRIVATE);
+        sp = context.getSharedPreferences(ConstantData.PREF, MODE_PRIVATE);
+
+        db = context.openOrCreateDatabase("MayInternship",MODE_PRIVATE,null);
+        String tableQuery = "CREATE TABLE IF NOT EXISTS RECORD(NAME VARCHAR(100),EMAIL VARCHAR(100),CONTACT BIGINT(10),PASSWORD VARCHAR(15),DOB VARCHAR(10),GENDER VARCHAR(6),CITY VARCHAR(50))";
+        db.execSQL(tableQuery);
+
+        String wishlistTableQuery = "CREATE TABLE IF NOT EXISTS WISHLIST(CONTACT INT(10),PRODUCTNAME VARCHAR(100))";
+        db.execSQL(wishlistTableQuery);
+
+        String cartTableQuery = "CREATE TABLE IF NOT EXISTS CART(CONTACT INT(10),ORDERID INT(10),PRODUCTNAME VARCHAR(100),QTY INT(10),PRODUCTPRICE INT(100),PRODUCTUNIT VARCHAR(100),PRODUCTIMAGE INT(100))";
+        db.execSQL(cartTableQuery);
+
     }
 
     @NonNull
@@ -33,7 +50,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyHolder
 
     public class MyHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView,addCart,wishlist,wishlistFill;
+        ImageView imageView,addCart,removeCart,wishlist,wishlistFill;
         TextView name,price;
 
         public MyHolder(@NonNull View itemView) {
@@ -42,6 +59,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyHolder
             name = itemView.findViewById(R.id.custom_product_name);
             price = itemView.findViewById(R.id.custom_product_price);
             addCart = itemView.findViewById(R.id.custom_product_cart);
+            removeCart = itemView.findViewById(R.id.custom_product_cart_remove);
             wishlist = itemView.findViewById(R.id.custom_product_wishlist);
             wishlistFill = itemView.findViewById(R.id.custom_product_wishlist_fill);
         }
@@ -65,16 +83,52 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyHolder
             }
         });
 
+        if(productArrayList.get(position).isCart()){
+            holder.addCart.setVisibility(View.GONE);
+            holder.removeCart.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.addCart.setVisibility(View.VISIBLE);
+            holder.removeCart.setVisibility(View.GONE);
+        }
+
         holder.addCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new CommonMethod(context,"Add To Cart");
+                int iQty = 1;
+                int productPrice = Integer.parseInt(productArrayList.get(position).getPrice());
+                int iTotalPrice = iQty * productPrice;
+                String insertQuery = "INSERT INTO CART VALUES('"+sp.getString(ConstantData.CONTACT,"")+"','0','"+productArrayList.get(position).getName()+"','"+iQty+"','"+iTotalPrice+"','"+productArrayList.get(position).getUnit()+"','"+productArrayList.get(position).getImage()+"')";
+                db.execSQL(insertQuery);
+                holder.addCart.setVisibility(View.GONE);
+                holder.removeCart.setVisibility(View.VISIBLE);
             }
         });
+
+        holder.removeCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String removeQuery = "DELETE FROM CART WHERE CONTACT='"+sp.getString(ConstantData.CONTACT,"")+"' AND PRODUCTNAME='"+productArrayList.get(position).getName()+"' AND ORDERID='0'";
+                db.execSQL(removeQuery);
+                holder.addCart.setVisibility(View.VISIBLE);
+                holder.removeCart.setVisibility(View.GONE);
+            }
+        });
+
+        if(productArrayList.get(position).isWishlist()){
+            holder.wishlist.setVisibility(View.GONE);
+            holder.wishlistFill.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.wishlist.setVisibility(View.VISIBLE);
+            holder.wishlistFill.setVisibility(View.GONE);
+        }
 
         holder.wishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String insertQuery = "INSERT INTO WISHLIST VALUES('"+sp.getString(ConstantData.CONTACT,"")+"','"+productArrayList.get(position).getName()+"')";
+                db.execSQL(insertQuery);
                 holder.wishlist.setVisibility(View.GONE);
                 holder.wishlistFill.setVisibility(View.VISIBLE);
             }
@@ -83,6 +137,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyHolder
         holder.wishlistFill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String removeQuery = "DELETE FROM WISHLIST WHERE CONTACT='"+sp.getString(ConstantData.CONTACT,"")+"' AND PRODUCTNAME='"+productArrayList.get(position).getName()+"'";
+                db.execSQL(removeQuery);
                 holder.wishlist.setVisibility(View.VISIBLE);
                 holder.wishlistFill.setVisibility(View.GONE);
             }

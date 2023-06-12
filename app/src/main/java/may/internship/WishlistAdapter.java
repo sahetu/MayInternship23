@@ -1,7 +1,10 @@
 package may.internship;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +22,20 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.MyHold
     ArrayList<ProductList> productArrayList;
     SharedPreferences sp;
 
+    SQLiteDatabase db;
+
     public WishlistAdapter(Context context, ArrayList<ProductList> productArrayList) {
         this.context = context;
         this.productArrayList = productArrayList;
         sp = context.getSharedPreferences(ConstantData.PREF,Context.MODE_PRIVATE);
+
+        db = context.openOrCreateDatabase("MayInternship",MODE_PRIVATE,null);
+        String tableQuery = "CREATE TABLE IF NOT EXISTS RECORD(NAME VARCHAR(100),EMAIL VARCHAR(100),CONTACT BIGINT(10),PASSWORD VARCHAR(15),DOB VARCHAR(10),GENDER VARCHAR(6),CITY VARCHAR(50))";
+        db.execSQL(tableQuery);
+
+        String wishlistTableQuery = "CREATE TABLE IF NOT EXISTS WISHLIST(CONTACT INT(10),PRODUCTNAME VARCHAR(100))";
+        db.execSQL(wishlistTableQuery);
+
     }
 
     @NonNull
@@ -75,6 +88,9 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.MyHold
         holder.wishlistFill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String removeQuery = "DELETE FROM WISHLIST WHERE CONTACT='"+sp.getString(ConstantData.CONTACT,"")+"' AND PRODUCTNAME='"+productArrayList.get(position).getName()+"'";
+                db.execSQL(removeQuery);
+
                 productArrayList.remove(position);
                 notifyDataSetChanged();
                 new CommonMethod(context,"Product Removed From Wishlist");

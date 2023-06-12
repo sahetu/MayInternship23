@@ -29,6 +29,15 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/custom_cart_qty"
+            style="@style/text_white_bold_18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:gravity="center"
+            android:textColor="@color/black" />
+
+        <TextView
             android:id="@+id/custom_cart_price"
             style="@style/text_white_trans_16"
             android:layout_width="match_parent"

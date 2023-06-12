@@ -16,9 +16,9 @@ import java.util.ArrayList;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyHolder> {
 
     Context context;
-    ArrayList<ProductList> productArrayList;
+    ArrayList<CartList> productArrayList;
     SharedPreferences sp;
-    public CartAdapter(Context context, ArrayList<ProductList> productArrayList) {
+    public CartAdapter(Context context, ArrayList<CartList> productArrayList) {
         this.context = context;
         this.productArrayList = productArrayList;
         sp = context.getSharedPreferences(ConstantData.PREF,Context.MODE_PRIVATE);
@@ -34,12 +34,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyHolder> {
     public class MyHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView,removeCart,wishlist,wishlistFill;
-        TextView name,price;
+        TextView name,price,qty;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.custom_cart_image);
             name = itemView.findViewById(R.id.custom_cart_name);
+            qty = itemView.findViewById(R.id.custom_cart_qty);
             price = itemView.findViewById(R.id.custom_cart_price);
             removeCart = itemView.findViewById(R.id.custom_cart_remove);
             wishlist = itemView.findViewById(R.id.custom_cart_wishlist);
@@ -50,6 +51,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         holder.name.setText(productArrayList.get(position).getName());
+
+        holder.qty.setText("Qty : "+productArrayList.get(position).getQty());
+
         holder.price.setText(ConstantData.PRICE_SYMBOL+productArrayList.get(position).getPrice()+"/"+productArrayList.get(position).getUnit());
         holder.imageView.setImageResource(productArrayList.get(position).getImage());
 
