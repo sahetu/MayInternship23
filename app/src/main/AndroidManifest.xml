@@ -13,9 +13,11 @@
         android:theme="@style/Theme.MayInternship23"
         tools:targetApi="31">
         <activity
+            android:name=".ShippingActivity"
+            android:exported="false" />
+        <activity
             android:name=".DashboardActivity"
-            android:exported="true" >
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ForgotPasswordActivity"
             android:exported="false" />

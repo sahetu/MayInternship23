@@ -95,9 +95,20 @@ public class CartFragment extends Fragment {
             CartAdapter prodAdapter = new CartAdapter(getActivity(), productArrayList);
             recyclerView.setAdapter(prodAdapter);
         }
+        else{
+            iTotalAmount=0;
+        }
 
         totalAmount = view.findViewById(R.id.cart_total);
         checkout = view.findViewById(R.id.cart_checkout);
+
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sp.edit().putString(ConstantData.CART_TOTAL, String.valueOf(iTotalAmount)).commit();
+                new CommonMethod(getActivity(),ShippingActivity.class);
+            }
+        });
 
         totalAmount.setText("Total : "+ConstantData.PRICE_SYMBOL+iTotalAmount);
 
