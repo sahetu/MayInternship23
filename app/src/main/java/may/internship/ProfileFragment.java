@@ -13,7 +13,7 @@ import android.widget.Button;
 
 public class ProfileFragment extends Fragment {
 
-    Button logout,profile,changePassword;
+    Button logout,profile,changePassword,myOrder;
     SharedPreferences sp;
 
     public ProfileFragment() {
@@ -27,6 +27,14 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         sp = getActivity().getSharedPreferences(ConstantData.PREF, Context.MODE_PRIVATE);
+
+        myOrder = view.findViewById(R.id.fragment_profile_order_hsitory);
+        myOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CommonMethod(getActivity(),OrderHistoryActivity.class);
+            }
+        });
 
         changePassword = view.findViewById(R.id.fragment_profile_change_password);
         changePassword.setOnClickListener(new View.OnClickListener() {

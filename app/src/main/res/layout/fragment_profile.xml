@@ -7,6 +7,15 @@
     tools:context=".ProfileFragment">
 
     <Button
+        android:id="@+id/fragment_profile_order_hsitory"
+        style="@style/button_green_bold_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="@string/my_order" />
+
+    <Button
         android:id="@+id/fragment_profile_change_password"
         style="@style/button_green_bold_16"
         android:layout_width="match_parent"
