@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class OrderHistoryActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ArrayList<OrderList> arrayList;
+    public static ArrayList<OrderList> arrayList;
 
     SharedPreferences sp;
     SQLiteDatabase db;
